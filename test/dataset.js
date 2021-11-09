@@ -18,7 +18,7 @@ const allTrips = [
     "userID": 1,
     "destinationID": 1,
     "travelers": 1,
-    "date": "2022/09/16",
+    "date": "2021/09/16",
     "duration": 8,
     "status": "approved",
     "suggestedActivities": []
@@ -28,7 +28,7 @@ const allTrips = [
     "userID": 1,
     "destinationID": 2,
     "travelers": 5,
-    "date": "2022/10/04",
+    "date": "2021/10/04",
     "duration": 18,
     "status": "approved",
     "suggestedActivities": []
@@ -37,7 +37,7 @@ const allTrips = [
     "userID": 2,
     "destinationID": 1,
     "travelers": 4,
-    "date": "2022/05/22",
+    "date": "2019/05/22",
     "duration": 17,
     "status": "approved",
     "suggestedActivities": []
@@ -46,7 +46,7 @@ const allTrips = [
     "userID": 2,
     "destinationID": 3,
     "travelers": 2,
-    "date": "2022/02/25",
+    "date": "2021/11/8",
     "duration": 10,
     "status": "approved",
     "suggestedActivities": []
@@ -57,7 +57,7 @@ const allTrips = [
     "travelers": 3,
     "date": "2022/04/30",
     "duration": 18,
-    "status": "approved",
+    "status": "pending",
     "suggestedActivities": []
   } ];
 
@@ -92,3 +92,5 @@ const allTrips = [
     "image": "https://images.unsplash.com/photo-1558029697-a7ed1a4b94c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
     "alt": "boats at a dock during the day time"
   }];
+
+  export { allUsers, allTrips, allDestinations }
