@@ -1,6 +1,30 @@
 /* This is an example of how to import a partial scss file*/
 @import '_variables';
+@import '_mixins';
+@import 'reset';
 
 body {
   background: $primary-background;
+}
+
+h3 {
+  font-size: 24px;
+  margin: 20px;
+}
+
+section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 350px);
+
+  img { 
+    width: 100%;
+  }
+
+  h4 {
+    text-align: center;
+  }
+
+  article {
+    margin: 20px;
+  }
 }
