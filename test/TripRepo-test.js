@@ -4,7 +4,7 @@ import TripRepo from "../src/TripRepo.js";
 import Trip from "../src/Trip.js";
 import { allUsers, allTrips, allDestinations } from "./dataset.js";
 
-describe('User', () => {
+describe('UserRepo', () => {
   let tripRepo;
   beforeEach(() => {
     tripRepo = new TripRepo(allTrips, allDestinations);

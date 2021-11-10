@@ -46,7 +46,7 @@ const allTrips = [
     "userID": 2,
     "destinationID": 1,
     "travelers": 4,
-    "date": "2019/05/22",
+    "date": "2021/05/22",
     "duration": 17,
     "status": "approved",
     "suggestedActivities": []
