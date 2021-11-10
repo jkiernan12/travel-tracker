@@ -33,6 +33,15 @@ const allTrips = [
     "status": "approved",
     "suggestedActivities": []
   }, {
+    "id": 2,
+    "userID": 1,
+    "destinationID": 3,
+    "travelers": 2,
+    "date": "2021/09/04",
+    "duration": 10,
+    "status": "approved",
+    "suggestedActivities": []
+  }, {
     "id": 3,
     "userID": 2,
     "destinationID": 1,

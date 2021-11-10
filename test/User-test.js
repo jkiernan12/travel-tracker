@@ -1,7 +1,8 @@
 import chai from 'chai';
 const expect = chai.expect;
-import User from "../src/User.js"
-import { allUsers, allTrips, allDestinations } from "./dataset.js"
+import User from "../src/User.js";
+import Trip from "../src/Trip.js"
+import { allTrips } from "./dataset.js"
 
 describe('User', () => {
   let user;
@@ -11,92 +12,25 @@ describe('User', () => {
 
   it('should hold all of the users trip data', () => {
 
-    expect(user.allTrips).to.eql([{
-      "id": 3,
-      "userID": 2,
-      "destinationID": 1,
-      "travelers": 4,
-      "date": "2019/05/22",
-      "duration": 17,
-      "status": "approved",
-      "suggestedActivities": []
-    }, {
-      "id": 4,
-      "userID": 2,
-      "destinationID": 3,
-      "travelers": 2,
-      "date": "2021/11/8",
-      "duration": 10,
-      "status": "approved",
-      "suggestedActivities": []
-    }, {
-      "id": 5,
-      "userID": 2,
-      "destinationID": 4,
-      "travelers": 3,
-      "date": "2022/04/30",
-      "duration": 18,
-      "status": "approved",
-      "suggestedActivities": []
-    } ]);
+    expect(user.allTrips).to.be.an.instanceOf(Array);
+    expect(user.allTrips[0]).to.be.an.instanceOf(Trip);
   });
 
   it('should return past, present and upcoming trips', () => {
-    expect(user.getTripsByDate("past")).to.equal([{
-      "id": 3,
-      "userID": 2,
-      "destinationID": 1,
-      "travelers": 4,
-      "date": "2019/05/22",
-      "duration": 17,
-      "status": "approved",
-      "suggestedActivities": []
-    }]);
-    expect(user.getTripsByDate("present")).to.equal([{
-      "id": 4,
-      "userID": 2,
-      "destinationID": 3,
-      "travelers": 2,
-      "date": "2021/11/8",
-      "duration": 10,
-      "status": "approved",
-      "suggestedActivities": []
-    }]);
-    expect(user.getTripsByDate("future")).to.equal([{
-      "id": 5,
-      "userID": 2,
-      "destinationID": 4,
-      "travelers": 3,
-      "date": "2022/04/30",
-      "duration": 18,
-      "status": "pending",
-      "suggestedActivities": []
-    }]);
+    expect(user.getTripsByDate("past")).to.be.an.instanceOf(Array);
+    expect(user.getTripsByDate("past")[0]).to.be.an.instanceOf(Trip);
+    expect(user.getTripsByDate("past")[0].date).to.equal("2019/05/22");
+    expect(user.getTripsByDate("present")[0].date).to.equal("2021/11/8");
+    expect(user.getTripsByDate("future")[0].date).to.equal("2022/04/30");
+  });
+
+  it('should calculate total spent in past year', () => {
+    expect(user.lastYearCost()).to.equal(8900);
   });
 
   it('should return pending trips', () => {
-    expect(user.getPendingTrips()).to.eql([{
-      "id": 5,
-      "userID": 2,
-      "destinationID": 4,
-      "travelers": 3,
-      "date": "2022/04/30",
-      "duration": 18,
-      "status": "pending",
-      "suggestedActivities": []
-    }]);
-  });
-
-  it('should return pending trips', () => {
-    expect(user.getPendingTrips()).to.eql([{
-      "id": 5,
-      "userID": 2,
-      "destinationID": 4,
-      "travelers": 3,
-      "date": "2022/04/30",
-      "duration": 18,
-      "status": "pending",
-      "suggestedActivities": []
-    }]);
+    expect(user.getPending()).to.be.an.instanceOf(Array);
+    expect(user.getPending()[0]).to.be.an.instanceOf(Trip);
+    expect(user.getPending()[0].status).to.equal("pending");
   });
 });

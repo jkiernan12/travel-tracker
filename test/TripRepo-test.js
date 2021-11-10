@@ -11,6 +11,13 @@ describe('User', () => {
   })
 
   it('should hold all of the users trip data', () => {
-    expect(tripRepo)
+    expect(tripRepo.allTrips).to.be.an.instanceOf(Array);
+    expect(tripRepo.allTrips[0]).to.be.an.instanceOf(Trip)
+  });
+  
+  it('should return a filtered list of trips by user ID', () => {
+    expect(tripRepo.getUserTrips(1)).to.be.an.instanceOf(Array);
+    expect(tripRepo.getUserTrips(1)[0]).to.be.an.instanceOf(Trip);
+    expect(tripRepo.getUserTrips(1)[0].userID).to.equal(1);
   });
 });
