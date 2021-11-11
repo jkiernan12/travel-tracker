@@ -9,6 +9,47 @@
 <body>
   <h1>Travel Tracker</h1>
   <h2>Hello <span id="userName"></span>!</h2>
+  <button data-micromodal-trigger="modal-1" id="addTripBtn">Add Trip</button>
+  <div id="modal-1" aria-hidden="true" class="modal">
+    <div tabindex="-1" data-micromodal-close>
+      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+        <header>
+          <h2 id="modal-1-title">
+            Add Trip
+          </h2>
+          <button aria-label="Close modal" data-micromodal-close>x</button>
+        </header>
+        <div id="modal-1-content">
+          <form>
+            <div class="trip-date-section">
+              <label for="trip-date-input">Trip Date: </label>
+              <input type="date" name="trip-date" id="trip-date-input" required>
+            </div>
+            <div class="trip-duration-section">
+              <label for="trip-duration-input">Trip Duration: </label>
+              <input type="number" name="trip-duration" id="trip-date-input" required>
+            </div>
+            <div class="trip-numTravelers-section">
+              <label for="trip-numTravelers-input">Number of travelers: </label>
+              <input type="number" name="trip-numTravelers" id="trip-numTravelers-input" required>
+            </div>
+            <div class="trip-destination-section">
+              <label for="trip-destination-input">Trip Destination: </label>
+              <select name="trip-destinations" id="trip-destinations-input" required>
+              </select>
+            </div>
+            <div class="form-example">
+              <label for="email">Enter your email: </label>
+              <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-example">
+              <input type="submit" value="Request Trip">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <main>
     <p>Total spent on trips last year: <span id="totalYearSpent"></span></p>
     <h3>Current Trips</h3>
