@@ -1,8 +1,7 @@
-import TripRepo from "./TripRepo.js";
-
 class User {
-  constructor(id, userTrips) {
-    this.id = id;
+  constructor(userData, userTrips) {
+    this.id = userData.id;
+    this.name = userData.name;
     this.allTrips = userTrips;
   }
 
