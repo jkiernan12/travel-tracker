@@ -1,17 +1,15 @@
-import TripRepo from "./TripRepo.js";
-
 class User {
-  constructor(id, userTrips) {
-    this.id = id;
+  constructor(userData, userTrips) {
+    this.id = userData.id;
+    this.name = userData.name;
     this.allTrips = userTrips;
   }
 
   getTripsByDate(timeframe) {
-    const currentDate = Date.now();
-    const dayMultiplier = 86400000;
+    const currentDate = new Date();
     return this.allTrips.filter(trip => {
-      let tripEnd = Date.parse(trip.date) + trip.duration * dayMultiplier;
-      let tripStart = Date.parse(trip.date);
+      let tripEnd = this.getEndDate(trip.date, trip.duration);
+      let tripStart = new Date(trip.date);
 
       if (timeframe === "past") {
         return (tripEnd < currentDate);
@@ -23,9 +21,13 @@ class User {
     });
   }
 
+  getEndDate(date, duration) {
+    const startDate = new Date(date);
+    return new Date(startDate.setDate(startDate.getDate() + duration));
+  }
+
   lastYearCost() {
-    const dayMultiplier = 86400000;
-    const pastYearDate = Date.now() - (dayMultiplier * 365);
+    const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
 
     return this.getTripsByDate("past")
     .filter(trip => {

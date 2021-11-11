@@ -10,16 +10,19 @@ import { getData } from './api-calls.js'
 import './images/turing-logo.png'
 import User from './User';
 import TripRepo from './TripRepo';
+import { renderUserPage } from './render-dom'
+
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
-getData(3, initClasses)
+getData(29, initClasses)
 
 function initClasses(allData) {
-  console.log(allData)
-  const currentUserID = allData[0].id;
+  console.log(allData[0])
+  const currentUser = allData[0];
   const tripRepo = new TripRepo(allData[1].trips, allData[2].destinations);
-  const user = new User(currentUserID, tripRepo.getUserTrips(currentUserID));
-  // renderUserPage
+  const user = new User(currentUser, tripRepo.getUserTrips(currentUser.id));
+  console.log(user)
+  renderUserPage(user)
 }
