@@ -9,9 +9,10 @@ describe('Destinations', () => {
     destinations = new Destinations(allDestinations);
   })
   
-  it('should return a alpha sorted array of destination names', () => {
+  it('should return a alpha sorted array of destination names and Ids', () => {
     expect(destinations.getAllNames()).to.be.an.instanceOf(Array)
-    expect(destinations.getAllNames()[0]).to.equal("Cartagena, Colombia");
-    expect(destinations.getAllNames()[3]).to.equal("Sydney, Austrailia");
+    expect(destinations.getAllNames()[0].name).to.equal("Cartagena, Colombia");
+    expect(destinations.getAllNames()[0].id).to.equal(4);
+    expect(destinations.getAllNames()[3].name).to.equal("Sydney, Austrailia");
   });
 });

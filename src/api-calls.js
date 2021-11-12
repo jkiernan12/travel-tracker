@@ -1,5 +1,4 @@
-import User from './User';
-import TripRepo from './TripRepo';
+import { initClasses, user } from './scripts.js'
 
 function getData(userID, callback) {
   return Promise.all([
@@ -7,15 +6,31 @@ function getData(userID, callback) {
     fetch('http://localhost:3001/api/v1/trips'),
     fetch('http://localhost:3001/api/v1/destinations')
   ]).then((res) => {
-    // if (res.ok) {
       return Promise.all(res.map(res => res.json()));
-    // } else {
-      
-    // }
   })
   .then(data => callback(data))
   .catch(err => console.log(err))
 }
 
-export { getData };
+function postData(data) {
+  fetch('http://localhost:3001/api/v1/trips', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/JSON',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(res => {
+    if (res.ok) {
+      getData(user.id, initClasses)
+      return res.json()
+    } else {
+      throw new Error()
+    }
+  })
+  .then(data => console.log(data))
+  .catch(err => console.log(err))
+}
+
+export { getData, postData };
 

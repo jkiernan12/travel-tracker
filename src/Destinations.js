@@ -17,6 +17,10 @@ class Destinations {
       return { name: destination.destination, id: destination.id }
     });
   }
+
+  getByID(id) {
+    return this.allDestinations.find(destination => destination.id === id);
+  }
 }
 
 export default Destinations;
