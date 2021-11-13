@@ -28,3 +28,11 @@ section {
     margin: 20px;
   }
 }
+
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
