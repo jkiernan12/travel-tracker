@@ -5,34 +5,134 @@
 
 body {
   background: $primary-background;
+  color: $primary-text;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ul {
+    display: flex;
+
+    li {
+      margin: 15px;
+      transition: .1s;
+      padding: 8px;
+
+      &:hover {
+        color: gray;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+h1 {
+  color: $secondary-text;
+  font-family: 'Pacifico', serif;
+  font-size: 48px;
+  margin: 10px;
+  text-align: center;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 30px;
   margin: 20px;
+  font-family: 'Pacifico', serif;
+}
+
+.account-info {
+  background-color: $primary-text;
+  color: $primary-background;
+  margin: 15px;
+  padding: 25px;
+  border-radius: 6px;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  form {
+    display: flex;
+    max-width: 850px;
+
+    label {
+      font-size: 14px;
+      color: rgb(89, 89, 89);
+      margin-left: 4px;
+    }
+
+    input, select {
+      margin: 4px;
+      border-radius: 6px;
+      border: 1px solid lightgrey;
+    }
+  }
 }
 
 section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 350px);
-
-  img { 
-    width: 100%;
-  }
-
-  h4 {
+  h3 {
     text-align: center;
   }
 
-  article {
-    margin: 20px;
+  div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  
+    img { 
+      width: 100%;
+    }
+  
+    h4 {
+      text-align: center;
+    }
+  
+    article {
+      font-family: 'Roboto', sans-serif;
+      margin: 20px;
+      background-position: center;
+      background-size: cover;
+      border: 1px solid lightgrey;
+      border-radius: 2px;
+
+      .image-container {
+        height: 200px;
+
+      }
+      h4 {
+        font-size: 22px;
+        margin: 4px;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 4px;
+        font-size: 14px;
+      }
+
+      .region {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
   }
+  
 }
 
-.modal {
+.selected {
+  background-color: $primary-text;
+  border-radius: 15px;
+  color: white;
+}
+
+.hidden {
   display: none;
-}
-
-.modal.is-open {
-  display: block;
 }
