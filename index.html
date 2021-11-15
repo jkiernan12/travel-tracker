@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <title>Trips-a-Lot</title>
+</head>
+<body>
+  <header>
+    <h1>Trips-a-Lot</h1>
+    <nav id="navBar">
+      <ul>
+        <li data-section="pendingSection" tabindex=0>Pending Trips</li>
+        <li class="selected" data-section="pastSection" tabindex=0>Past Trips</li>
+        <li data-section="futureSection" tabindex=0>Future Trips</li>
+      </ul>
+    </nav>
+    <div class="account-info">
+      <h2><span id="userName"></span></h2>
+      <p>Yearly Spending: <span id="totalYearSpent"></span></p>
+    </div>
+  </header>
+    <div class="form-container">
+          <form id="newTripForm" name="newTripFormName">
+            <div class="trip-destination-section">
+              <label for="trip-destination-input">Trip Destination: </label>
+              <select name="destinationID" id="trip-destinations-input" required>
+              </select>
+            </div>
+            <div class="trip-date-section">
+              <label for="trip-date-input">Trip Date: </label>
+              <input type="date" name="date" id="trip-date-input" required>
+            </div>
+            <div class="trip-duration-section">
+              <label for="trip-duration-input">Trip Duration: </label>
+              <input type="number" name="duration" id="trip-duration-input" required>
+            </div>
+            <div class="trip-numTravelers-section">
+              <label for="trip-numTravelers-input">Number of travelers: </label>
+              <input type="number" name="travelers" id="trip-numTravelers-input" required>
+            </div>
+
+            <p>Cost: <span id="totalTripCost"></span></p>
+            <div class="form-example">
+              <button type="submit" id="requestTripBtn">Request Trip</button>
+            </div>
+          </form>
+        </div>
+  <main>
+    <section class="hidden" id="currentSection">
+      <h3>Current Trips</h3>
+      <div id="currentSectionTrips"></div>
+    </section>
+    <section class="hidden" id="pendingSection">
+      <h3>Pending Trips</h3>
+      <div id="pendingSectionTrips"></div>
+    </section>
+    <section class="hidden" id="futureSection">
+      <h3>Future Trips</h3>
+      <div id="futureSectionTrips"></div>
+    </section>
+    <section id="pastSection">
+      <h3>Past Trips</h3>
+      <div id="pastSectionTrips"></div>
+    </section>
+  </main>
+  <script src="bundle.js"></script>
+
+</body>
+</html>
