@@ -71,4 +71,4 @@ data.forEach(trip => {
 })
 }
 
-export { renderUserPage }
+export { renderUserPage, hideElement, showElement }

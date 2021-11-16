@@ -189,14 +189,27 @@ section {
   font-size: 14px;
 }
 
-.selected {
-  background-color: $primary-text;
-  border-radius: 15px;
-  color: white;
-}
-
-.hidden {
-  display: none;
+.error-modal {
+  position: fixed;
+  top: 10%;
+  z-index: 2;
+  display: flex;
+  background-color: white;
+  margin: 6px;
+  padding: 10px;
+  // width: 75%;
+  min-height: 40vh;
+  position: fixed;
+  left: 75%;
+  margin-left: -37.5%;
+  border: 2px solid grey;
+  
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -217,7 +230,7 @@ section {
 
   #newTripForm {
     flex-direction: column;
-    width: 100%;
+    width: 90%;
 
     div {
       width: 100%;
@@ -266,4 +279,14 @@ section {
       }
     }
   }
+}
+
+.selected {
+  background-color: $primary-text;
+  border-radius: 15px;
+  color: white;
+}
+
+.hidden {
+  display: none;
 }

@@ -19,8 +19,8 @@ function initClasses(allData) {
   tripRepo = new TripRepo(allData[1].trips, allData[2].destinations);
   destinations = new Destinations(allData[2].destinations);
   user = new User(userData, tripRepo.getUserTrips(userData.id));
-  renderUserPage(user)
-  initializeForm()
+  renderUserPage(user);
+  initializeForm();
 }
 
 export { user, tripRepo, destinations, initClasses }

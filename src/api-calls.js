@@ -1,4 +1,12 @@
-import { initClasses, user } from './scripts.js'
+import { initClasses, user } from './scripts.js';
+import { showElement, hideElement } from './render-dom.js';
+import MicroModal from 'micromodal';
+
+const errorModal = document.querySelector("#modal-1");
+const errorExit = document.querySelector("#errorClose");
+const errMessage = document.querySelector("#modal-1-content");
+
+errorExit.addEventListener('click', hideErr);
 
 function getData(userID, callback) {
   return Promise.all([
@@ -25,11 +33,18 @@ function postData(data) {
       getData(user.id, initClasses)
       return res.json()
     } else {
-      throw new Error()
+      throw new Error("Please make sure all inputs are complete.")
     }
-  })
-  .then(data => console.log(data))
-  .catch(err => console.log(err))
+  }).catch(err => handleErr(err))
+}
+
+function handleErr(err) {
+  showElement(errorModal);
+  errMessage.innerText = err.message;
+}
+
+function hideErr() {
+  hideElement(errorModal);
 }
 
 export { getData, postData };

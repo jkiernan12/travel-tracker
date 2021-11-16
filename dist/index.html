@@ -42,6 +42,20 @@
         <a id="logout-button" tabindex=0>Logout</a>
       </div>
     </header>
+    <div id="modal-1" aria-hidden="true" class="error-modal hidden">
+      <div tabindex="-1" data-micromodal-close>
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+          <header>
+            <h2 id="modal-1-title">
+              Error
+            </h2>
+            <button id="errorClose" aria-label="Close modal" data-micromodal-close>x</button>
+          </header>
+          <div id="modal-1-content">
+          </div>
+        </div>
+      </div>
+    </div>
       <div class="form-container">
         <form id="newTripForm" name="newTripFormName">
           <div class="trip-destination-section">
