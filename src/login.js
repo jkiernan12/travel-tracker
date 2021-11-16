@@ -1,8 +1,9 @@
 import { getData } from "./api-calls";
-import { initClasses } from "./scripts";
+import { initClasses, initAgentClasses } from "./scripts";
 
 const loginPage = document.querySelector("#loginPage");
 const mainPage = document.querySelector("#mainPage");
+const agentPage = document.querySelector("#agentPage");
 const loginUsername = document.querySelector("#login-username-input");
 const loginPassword = document.querySelector("#login-password-input");
 const loginButton = document.querySelector("#login-button-input");
@@ -17,10 +18,27 @@ logoutButton.addEventListener("click", logout);
 
 function checkLoginInputs(e) {
   e.preventDefault();
+  if (loginUsername.value === "agent") {
+    checkAgentLogin();
+  } else {
+    checkTravelerLogin();
+  }
+}
+
+function checkTravelerLogin() {
   const userIDNumber = Number(loginUsername.value.split("traveler")[1]);
   if (loginPassword.value === "travel" && Number.isInteger(userIDNumber) && userIDNumber > 0 && userIDNumber <= 50) {
     getData(userIDNumber, initClasses);
     switchPages(loginPage, mainPage);
+  } else {
+    loginError.innerText = "Check username or password";
+  }
+}
+
+function checkAgentLogin() {
+  if (loginPassword.value === "travel") {
+    getData("", initAgentClasses);
+    switchPages(loginPage, agentPage);
   } else {
     loginError.innerText = "Check username or password";
   }

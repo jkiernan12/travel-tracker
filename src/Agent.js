@@ -27,7 +27,7 @@ class Agent {
     })
     .reduce((total, trip) => {
       return total += trip.getTotalCost();
-    }, 0)
+    }, 0);
   }
   
   getCurrentTravelers() {

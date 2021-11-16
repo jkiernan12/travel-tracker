@@ -1,18 +1,17 @@
 import './css/base.scss';
-import { renderUserPage } from './render-dom'
+import { renderUserPage, renderAgentPage } from './render-dom'
 import { getData } from './api-calls.js';
 import { initializeForm } from './add-trip.js';
 import { checkLoginInputs } from './login';
 import User from './User';
 import TripRepo from './TripRepo';
 import Destinations from './Destinations';
+import Agent from './Agent';
 import MicroModal from 'micromodal';
 MicroModal.init();
 
 //Globals
-let user, tripRepo, destinations;
-
-// getData(29, initClasses)
+let user, tripRepo, destinations, agent;
 
 function initClasses(allData) {
   const userData = allData[0];
@@ -23,4 +22,12 @@ function initClasses(allData) {
   initializeForm();
 }
 
-export { user, tripRepo, destinations, initClasses }
+function initAgentClasses(allData) {
+  tripRepo = new TripRepo(allData[1].trips, allData[2].destinations);
+  destinations = new Destinations(allData[2].destinations);
+  console.log(allData[0]);
+  agent = new Agent(tripRepo, allData[0].travelers);
+  renderAgentPage(agent);
+}
+
+export { user, tripRepo, destinations, initClasses, initAgentClasses }

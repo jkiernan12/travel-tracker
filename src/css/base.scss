@@ -212,6 +212,11 @@ section {
   }
 }
 
+.login-page {
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 600px) {
   body {
     font-size: 22px;

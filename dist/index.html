@@ -11,6 +11,7 @@
 </head>
 <body>
   <main id="loginPage" class="login-page">
+    <h1>Trips-a-Lot</h1>
     <form>
       <p class="login-error" id="loginErrorMessage"></p>
       <div class="login-username">
@@ -25,6 +26,18 @@
         <button id="login-button-input">Login</button>
       </div>
     </form>
+  </main>
+  <main id="agentPage" class="agent-page hidden">
+    <p>Hello Agent, please excuse our appearance. We are UNDER MAINTENANCE.</p>
+    <p>Past year's income:</p>
+    <p id="agentTotalIncome"></p>
+    <p>Users currently travelling:</p>
+    <p id="agentCurrentTravelers"></p>
+    <p>Pending trips</p>
+    <section id="agentPendingTrips">
+      <h3>Pending Trips</h3>
+        <div id="agentPendingSectionTrips"></div>
+    </section>
   </main>
   <main id="mainPage" class="main-page hidden">
     <header>
