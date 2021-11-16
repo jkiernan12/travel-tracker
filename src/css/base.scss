@@ -4,78 +4,115 @@
 @import 'reset';
 
 body {
-  background: $primary-background;
-  color: $primary-text;
+  background: $secondary-color;
+  color: $primary-color;
   font-family: 'Roboto', sans-serif;
-  font-size: 18px;
+  font-size: $medium-font;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center, row);
+}
 
-  ul {
-    display: flex;
+.menu {
+  @include flex(space-between, center, row);
+}
 
-    li {
-      margin: 15px;
-      transition: .1s;
-      padding: 8px;
+.menu-item {
+  margin: 15px;
+  transition: .1s;
+  padding: 8px;
 
-      &:hover {
-        color: gray;
-        cursor: pointer;
-      }
-    }
+  &:hover {
+    color: $tertiary-color;
+    cursor: pointer;
   }
 }
 
 h1 {
-  color: $secondary-text;
+  color: $primary-color;
   font-family: 'Pacifico', serif;
-  font-size: 48px;
+  font-size: $x-large-font;
   margin: 10px;
   text-align: center;
 }
 
 h3 {
-  font-size: 30px;
+  font-size: $large-font;
   margin: 20px;
   font-family: 'Pacifico', serif;
 }
 
 .account-info {
-  background-color: $primary-text;
-  color: $primary-background;
+  color: $primary-color;
   margin: 15px;
   padding: 25px;
-  border-radius: 6px;
-}
+  border-radius: $small-curve;
+  border: 2px solid $primary-color;
 
-.form-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  h2 {
+    text-decoration: underline;
+  }
 
-  form {
-    display: flex;
-    max-width: 850px;
+  p, a {
+    font-size: $small-font;
+  }
 
-    label {
-      font-size: 14px;
-      color: rgb(89, 89, 89);
-      margin-left: 4px;
-    }
+  p {
+    line-height: 18px;
+    margin: 15px 0;
+  }
 
-    input, select {
-      margin: 4px;
-      border-radius: 6px;
-      border: 1px solid lightgrey;
-    }
+  a {
+    cursor: pointer;
+    color: $secondary-color;
+    border-radius: $medium-curve;
+    background-color: $primary-color;
+    padding: 4px 10px;
   }
 }
+
+.new-trip-form-container {
+  @include flex(center, center, row);
+  width: 100%;
+}
+
+.new-trip-form {
+  @include flex(space-evenly, center, row);
+  max-width: 850px;
+
+  label {
+    text-align: left;
+    font-size: $small-font;
+    color: $tertiary-color;
+    margin-left: 4px;
+  }
+
+  p {
+    text-align: left;
+    color: $primary-color;
+    font-size: $small-font;
+  }
+
+  .cost {
+    margin-right: 10px;
+  }
+
+  input, select {
+    margin: 4px;
+    border-radius: $small-curve;
+    border: 1px solid $tertiary-color;
+  }
+
+  button {
+    color: $secondary-color;
+    background-color: $primary-color;
+    border: none;
+    padding: 6px 10px;
+    border-radius: $small-curve;
+  }
+}
+
 
 section {
   h3 {
@@ -84,7 +121,7 @@ section {
 
   div {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 33%));
   
     img { 
       width: 100%;
@@ -97,17 +134,15 @@ section {
     article {
       font-family: 'Roboto', sans-serif;
       margin: 20px;
-      background-position: center;
-      background-size: cover;
-      border: 1px solid lightgrey;
-      border-radius: 2px;
+      border: 1px solid $tertiary-color;
+      border-radius: $x-small-curve;
 
       .image-container {
         height: 200px;
-
       }
+
       h4 {
-        font-size: 22px;
+        font-size: $medium-large-font;
         margin: 4px;
         text-align: left;
         font-weight: bold;
@@ -115,22 +150,131 @@ section {
 
       p {
         margin: 4px;
-        font-size: 14px;
+        font-size: $small-font;
       }
 
       .region {
-        font-size: 20px;
+        font-size: $medium-font;
         font-weight: bold;
       }
     }
   }
+}
+
+.login-page {
+  @include flex(center, center, row);
+  width: 100%;
+  height: 100vh;
+
+  form {
+    div {
+      @include flex(center, flex-start, column);
+      margin: 10px;
+    }
+  }
+}
+
+.login-error {
+  color: red;
+  font-size: $small-font;
+}
+
+.error-modal {
+  @include flex(center, center, column);
+  position: fixed;
+  top: 10%;
+  z-index: 2;
+  background-color: $secondary-color;
+  margin: 6px;
+  padding: 10px;
+  min-height: 40vh;
+  left: 75%;
+  margin-left: -37.5%;
+  border: 2px solid $tertiary-color;
   
+  header {
+    @include flex(space-between, center, row);
+  }
+}
+
+.login-page {
+  @include flex(center, center, column);
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: $medium-large-font;
+  }
+
+  header {
+    flex-direction: column;
+
+    nav {
+      flex-direction: column;
+
+      ul {
+        text-align: center
+      }
+    }
+  }
+
+  .new-trip-form {
+    flex-direction: column;
+    width: 90%;
+
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  section {
+    width: 100%;
+    div {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  article {
+    font-size: $large-font;
+    p {
+      font-size: $large-font;
+    }
+  }
+
+  p, a {
+    font-size: $large-font;
+  }
+
+  .form-container {
+    form {
+      label, button, input, select {
+        font-size: $medium-font;
+      }
+
+      button {
+        margin: 4px;
+      }
+    }
+  }
+
+  section {
+    div {
+      article {
+        margin: 8px;
+        p, a {
+          font-size: $medium-font;
+        }
+      }
+    }
+  }
 }
 
 .selected {
-  background-color: $primary-text;
-  border-radius: 15px;
-  color: white;
+  background-color: $primary-color;
+  border-radius: $medium-curve;
+  color: $secondary-color;
 }
 
 .hidden {

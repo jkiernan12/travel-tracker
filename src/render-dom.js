@@ -1,3 +1,4 @@
+//User elements
 const pendingSectionTrips = document.querySelector("#pendingSectionTrips");
 const pastSectionTrips = document.querySelector("#pastSectionTrips");
 const futureSectionTrips = document.querySelector("#futureSectionTrips");
@@ -7,6 +8,10 @@ const userGreeting = document.querySelector("#userName");
 const navBar = document.querySelector("#navBar");
 const menuItems = document.querySelectorAll("#navBar li");
 const allSections = document.querySelectorAll("section");
+//Agent elements
+const agentTotalIncome = document.querySelector("#agentTotalIncome");
+const agentCurrentTravelers = document.querySelector("#agentCurrentTravelers");
+const agentPendingTrips = document.querySelector("#agentPendingSectionTrips");
 
 navBar.addEventListener('click', switchSection);
 navBar.addEventListener('keyup', checkEnterKey);
@@ -40,6 +45,14 @@ function toggleMenuItem(element) {
   element.classList.add("selected");
 }
 
+function renderAgentPage(agent) {
+  agentTotalIncome.innerText = agent.getYearIncome();
+  agent.getCurrentTravelers().forEach(traveler => {
+    agentCurrentTravelers.innerText += traveler.id;
+  });
+  renderSection(agentPendingTrips, agent.getPending());
+}
+
 function renderUserPage(user) {
   totalYearSpent.innerHTML = "$" + user.lastYearCost();
   userGreeting.innerText = user.name;
@@ -50,6 +63,7 @@ function renderUserPage(user) {
 }
 
 function renderWidget(trip) {
+  const isPending = (trip.status === "pending") ? "<p>Status: Pending</p>" : ""
   const city = trip.destinationName.split(", ")[0];
   const region = trip.destinationName.split(", ")[1];
   return `<article>
@@ -58,6 +72,7 @@ function renderWidget(trip) {
     <p class="region">${region}</p>
     <p>${trip.date}</p>
     <p>${trip.numTravelers} travelers</p>
+    ${isPending}
     <p>Total Cost: $${trip.getTotalCost()}</p>
   </article>`
 }
@@ -69,4 +84,4 @@ data.forEach(trip => {
 })
 }
 
-export { renderUserPage }
+export { renderUserPage, renderAgentPage, hideElement, showElement }

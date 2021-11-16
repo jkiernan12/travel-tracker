@@ -68,7 +68,7 @@ function renderSelectList(names) {
   tripDestinationsInput.innerHTML = `<option class="default-select" value="">Choose a destination</option>`;
   names.forEach(name => {
     tripDestinationsInput.innerHTML += `<option value="${name.id}">${name.name}</option>`
-  })
+  });
 }
 
 export { initializeForm }

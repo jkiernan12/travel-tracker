@@ -10,63 +10,112 @@
   <title>Trips-a-Lot</title>
 </head>
 <body>
-  <header>
+  <main id="loginPage" class="login-page">
     <h1>Trips-a-Lot</h1>
-    <nav id="navBar">
-      <ul>
-        <li data-section="pendingSection" tabindex=0>Pending Trips</li>
-        <li class="selected" data-section="pastSection" tabindex=0>Past Trips</li>
-        <li data-section="futureSection" tabindex=0>Future Trips</li>
-      </ul>
-    </nav>
-    <div class="account-info">
-      <h2><span id="userName"></span></h2>
-      <p>Yearly Spending: <span id="totalYearSpent"></span></p>
-    </div>
-  </header>
-    <div class="form-container">
-          <form id="newTripForm" name="newTripFormName">
-            <div class="trip-destination-section">
-              <label for="trip-destination-input">Trip Destination: </label>
-              <select name="destinationID" id="trip-destinations-input" required>
-              </select>
-            </div>
-            <div class="trip-date-section">
-              <label for="trip-date-input">Trip Date: </label>
-              <input type="date" name="date" id="trip-date-input" required>
-            </div>
-            <div class="trip-duration-section">
-              <label for="trip-duration-input">Trip Duration: </label>
-              <input type="number" name="duration" id="trip-duration-input" required>
-            </div>
-            <div class="trip-numTravelers-section">
-              <label for="trip-numTravelers-input">Number of travelers: </label>
-              <input type="number" name="travelers" id="trip-numTravelers-input" required>
-            </div>
-
-            <p>Cost: <span id="totalTripCost"></span></p>
-            <div class="form-example">
-              <button type="submit" id="requestTripBtn">Request Trip</button>
-            </div>
-          </form>
-        </div>
-  <main>
-    <section class="hidden" id="currentSection">
-      <h3>Current Trips</h3>
-      <div id="currentSectionTrips"></div>
-    </section>
-    <section class="hidden" id="pendingSection">
+    <form class="login-form">
+      <p class="login-error" id="loginErrorMessage"></p>
+      <div class="login-username">
+        <label for="login-username-input">Username</label>
+        <input type="text" id="login-username-input" for="username">
+      </div>
+      <div class="login-password">
+        <label for="login-password-input">Password</label>
+        <input type="password" id="login-password-input" for="password">
+      </div>
+      <div class="login-buttn">
+        <button id="login-button-input">Login</button>
+      </div>
+    </form>
+  </main>
+  <main id="agentPage" class="agent-page hidden">
+    <p>Hello Agent, please excuse our appearance. We are UNDER MAINTENANCE.</p>
+    <p>Past year's income:</p>
+    <p id="agentTotalIncome"></p>
+    <p>Users currently travelling:</p>
+    <p id="agentCurrentTravelers"></p>
+    <p>Pending trips</p>
+    <section id="agentPendingTrips">
       <h3>Pending Trips</h3>
-      <div id="pendingSectionTrips"></div>
+        <div id="agentPendingSectionTrips"></div>
     </section>
-    <section class="hidden" id="futureSection">
-      <h3>Future Trips</h3>
-      <div id="futureSectionTrips"></div>
-    </section>
-    <section id="pastSection">
-      <h3>Past Trips</h3>
-      <div id="pastSectionTrips"></div>
-    </section>
+  </main>
+  <main id="mainPage" class="main-page hidden">
+    <header>
+      <h1>Trips-a-Lot</h1>
+      <nav id="navBar">
+        <ul class="menu">
+          <li class="menu-item" data-section="pendingSection" tabindex=0>Pending Trips</li>
+          <li class="selected menu-item" data-section="pastSection" tabindex=0>Past Trips</li>
+          <li class="menu-item"  data-section="futureSection" tabindex=0>Future Trips</li>
+        </ul>
+      </nav>
+      <div class="account-info">
+        <h2><span id="userName"></span></h2>
+        <p>Yearly Spending: <span id="totalYearSpent"></span></p>
+        <a id="logout-button" tabindex=0>Logout</a>
+      </div>
+    </header>
+    <div id="modal-1" aria-hidden="true" class="error-modal hidden">
+      <div tabindex="-1" data-micromodal-close>
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+          <header>
+            <h2 id="modal-1-title">
+              Error
+            </h2>
+            <button id="errorClose" aria-label="Close modal" data-micromodal-close>x</button>
+          </header>
+          <div id="modal-1-content">
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="new-trip-form-container">
+        <form class="new-trip-form" id="newTripForm" name="newTripFormName">
+          <div class="trip-destination-section">
+            <label for="trip-destination-input">Trip Destination: </label>
+            <select name="destinationID" id="trip-destinations-input" required>
+            </select>
+          </div>
+          <div class="trip-date-section">
+            <label for="trip-date-input">Trip Date: </label>
+            <input type="date" name="date" id="trip-date-input" required>
+          </div>
+          <div class="trip-duration-section">
+            <label for="trip-duration-input">Trip Duration: </label>
+            <input type="number" name="duration" id="trip-duration-input" min=1 required>
+          </div>
+          <div class="trip-numTravelers-section">
+            <label for="trip-numTravelers-input">Number of travelers: </label>
+            <input type="number" name="travelers" id="trip-numTravelers-input" min=1 required>
+          </div>
+          <div class="cost">
+            <label>Cost:</label>
+            <p id="totalTripCost"></p>
+          </div>
+          
+          <div class="form-example">
+            <button type="submit" id="requestTripBtn">Request Trip</button>
+          </div>
+        </form>
+      </div>
+    <div class=sectionsContainer>
+      <section class="hidden" id="currentSection">
+        <h3>Current Trips</h3>
+        <div id="currentSectionTrips"></div>
+      </section>
+      <section class="hidden" id="pendingSection">
+        <h3>Pending Trips</h3>
+        <div id="pendingSectionTrips"></div>
+      </section>
+      <section class="hidden" id="futureSection">
+        <h3>Future Trips</h3>
+        <div id="futureSectionTrips"></div>
+      </section>
+      <section id="pastSection">
+        <h3>Past Trips</h3>
+        <div id="pastSectionTrips"></div>
+      </section>
+    </div>
   </main>
   <script src="bundle.js"></script>
 
