@@ -1,8 +1,13 @@
-$primary-background: white;
-$primary-text: #2C2A4A;;
-$secondary-text: #2C2A4A;
-$body-font-size: 14px;
+$secondary-color: white;
+$primary-color: #2C2A4A;
+$tertiary-color: rgb(89, 89, 89);
 
-@media only screen and (max-width: 600px) {
-  $body-font-size: 36px;
-}
+$small-font: 14px;
+$medium-font: 18px;
+$medium-large-font: 22px;
+$large-font: 36px;
+$x-large-font: 48px;
+
+$x-small-curve: 2px;
+$small-curve: 6px;
+$medium-curve: 15px;

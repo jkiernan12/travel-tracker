@@ -12,7 +12,7 @@
 <body>
   <main id="loginPage" class="login-page">
     <h1>Trips-a-Lot</h1>
-    <form>
+    <form class="login-form">
       <p class="login-error" id="loginErrorMessage"></p>
       <div class="login-username">
         <label for="login-username-input">Username</label>
@@ -43,10 +43,10 @@
     <header>
       <h1>Trips-a-Lot</h1>
       <nav id="navBar">
-        <ul>
-          <li data-section="pendingSection" tabindex=0>Pending Trips</li>
-          <li class="selected" data-section="pastSection" tabindex=0>Past Trips</li>
-          <li data-section="futureSection" tabindex=0>Future Trips</li>
+        <ul class="menu">
+          <li class="menu-item" data-section="pendingSection" tabindex=0>Pending Trips</li>
+          <li class="selected menu-item" data-section="pastSection" tabindex=0>Past Trips</li>
+          <li class="menu-item"  data-section="futureSection" tabindex=0>Future Trips</li>
         </ul>
       </nav>
       <div class="account-info">
@@ -69,8 +69,8 @@
         </div>
       </div>
     </div>
-      <div class="form-container">
-        <form id="newTripForm" name="newTripFormName">
+      <div class="new-trip-form-container">
+        <form class="new-trip-form" id="newTripForm" name="newTripFormName">
           <div class="trip-destination-section">
             <label for="trip-destination-input">Trip Destination: </label>
             <select name="destinationID" id="trip-destinations-input" required>
@@ -82,11 +82,11 @@
           </div>
           <div class="trip-duration-section">
             <label for="trip-duration-input">Trip Duration: </label>
-            <input type="number" name="duration" id="trip-duration-input" required>
+            <input type="number" name="duration" id="trip-duration-input" min=1 required>
           </div>
           <div class="trip-numTravelers-section">
             <label for="trip-numTravelers-input">Number of travelers: </label>
-            <input type="number" name="travelers" id="trip-numTravelers-input" required>
+            <input type="number" name="travelers" id="trip-numTravelers-input" min=1 required>
           </div>
           <div class="cost">
             <label>Cost:</label>
