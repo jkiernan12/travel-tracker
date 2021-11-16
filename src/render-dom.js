@@ -50,6 +50,7 @@ function renderUserPage(user) {
 }
 
 function renderWidget(trip) {
+  const isPending = (trip.status === "pending") ? "<p>Status: Pending</p>" : ""
   const city = trip.destinationName.split(", ")[0];
   const region = trip.destinationName.split(", ")[1];
   return `<article>
@@ -58,6 +59,7 @@ function renderWidget(trip) {
     <p class="region">${region}</p>
     <p>${trip.date}</p>
     <p>${trip.numTravelers} travelers</p>
+    ${isPending}
     <p>Total Cost: $${trip.getTotalCost()}</p>
   </article>`
 }

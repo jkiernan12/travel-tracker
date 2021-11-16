@@ -2,6 +2,7 @@ import './css/base.scss';
 import { renderUserPage } from './render-dom'
 import { getData } from './api-calls.js';
 import { initializeForm } from './add-trip.js';
+import { checkLoginInputs } from './login';
 import User from './User';
 import TripRepo from './TripRepo';
 import Destinations from './Destinations';
@@ -11,7 +12,7 @@ MicroModal.init();
 //Globals
 let user, tripRepo, destinations;
 
-getData(29, initClasses)
+// getData(29, initClasses)
 
 function initClasses(allData) {
   const userData = allData[0];

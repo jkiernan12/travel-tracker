@@ -1,3 +1,8 @@
 $primary-background: white;
 $primary-text: #2C2A4A;;
 $secondary-text: #2C2A4A;
+$body-font-size: 14px;
+
+@media only screen and (max-width: 600px) {
+  $body-font-size: 36px;
+}
