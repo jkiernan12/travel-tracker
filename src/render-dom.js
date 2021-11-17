@@ -78,10 +78,10 @@ function renderWidget(trip) {
 }
 
 function renderSection(section, data) {
-section.innerHTML = "";
-data.forEach(trip => {
-  section.innerHTML += renderWidget(trip);
-})
+  section.innerHTML = "";
+  data.forEach(trip => {
+    section.innerHTML += renderWidget(trip);
+  })
 }
 
 export { renderUserPage, renderAgentPage, hideElement, showElement }

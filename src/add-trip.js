@@ -7,11 +7,15 @@ const requestTripBtn = document.querySelector("#requestTripBtn");
 const totalTripCost = document.querySelector('#totalTripCost');
 //Form Elements
 const newTripForm = document.querySelector("#newTripForm");
-const newTripFormInputs = document.querySelectorAll("#newTripForm input, #newTripForm select")
+const newTripFormInputs = document
+  .querySelectorAll("#newTripForm input, #newTripForm select")
 const tripDurationInput = document.querySelector("#trip-duration-input");
-const tripDateInput = document.querySelector("#trip-date-input");
-const tripNumTravelersInput = document.querySelector("#trip-numTravelers-input");
-const tripDestinationsInput = document.querySelector("#trip-destinations-input");
+const tripDateInput = document
+  .querySelector("#trip-date-input");
+const tripNumTravelersInput = document
+  .querySelector("#trip-numTravelers-input");
+const tripDestinationsInput = document
+  .querySelector("#trip-destinations-input");
 
 //Event listeners
 requestTripBtn.addEventListener("click", postNewTrip)
@@ -65,9 +69,11 @@ function setMinCalendarDate() {
 }
 
 function renderSelectList(names) {
-  tripDestinationsInput.innerHTML = `<option class="default-select" value="">Choose a destination</option>`;
+  tripDestinationsInput.innerHTML = `
+  <option class="default-select" value="">Choose a destination</option>`;
   names.forEach(name => {
-    tripDestinationsInput.innerHTML += `<option value="${name.id}">${name.name}</option>`
+    tripDestinationsInput.innerHTML += `
+    <option value="${name.id}">${name.name}</option>`
   });
 }
 

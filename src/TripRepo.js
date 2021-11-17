@@ -8,7 +8,8 @@ class TripRepo {
 
   createAllTrips(allTripData) {
     return allTripData.map(trip => {
-      const currentDestination = this.allDestinations.find(destination => destination.id === trip.destinationID);
+      const currentDestination = this.allDestinations
+        .find(destination => destination.id === trip.destinationID);
       return new Trip(trip, currentDestination);
     });
   }

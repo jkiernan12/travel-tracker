@@ -1,8 +1,6 @@
 import './css/base.scss';
 import { renderUserPage, renderAgentPage } from './render-dom'
-import { getData } from './api-calls.js';
 import { initializeForm } from './add-trip.js';
-import { checkLoginInputs } from './login';
 import User from './User';
 import TripRepo from './TripRepo';
 import Destinations from './Destinations';

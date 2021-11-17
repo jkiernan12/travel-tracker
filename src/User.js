@@ -30,16 +30,17 @@ class User {
     const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
 
     return this.getTripsByDate("past")
-    .filter(trip => {
-      return (Date.parse(trip.date) > pastYearDate)
-    })
-    .reduce((total, trip) => {
-      return total += trip.getTotalCost();
-    }, 0)
+      .filter(trip => {
+        return (Date.parse(trip.date) > pastYearDate)
+      })
+      .reduce((total, trip) => {
+        return total += trip.getTotalCost();
+      }, 0)
   }
 
   getPending() {
-    return this.getTripsByDate("future").filter(trip => trip.status === "pending")
+    return this.getTripsByDate("future")
+      .filter(trip => trip.status === "pending");
   }
 }
 

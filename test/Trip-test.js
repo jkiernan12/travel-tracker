@@ -1,7 +1,6 @@
 import chai from 'chai';
 const expect = chai.expect;
 import Trip from "../src/Trip.js";
-import User from "../src/User.js";
 import { allTrips, allDestinations } from "./dataset.js";
 
 describe('Trip', () => {
@@ -12,7 +11,7 @@ describe('Trip', () => {
     trip = new Trip(tripData, destinationData);
   })
   
-  it('should have all the properties from the trip dataset (num travelers, date, duration, status and suggested activities)', () => {
+  it('should have all the properties from the trip dataset', () => {
     expect(trip.numTravelers).to.equal(1);
     expect(trip.date).to.equal("2021/09/16");
     expect(trip.duration).to.equal(8);
@@ -20,7 +19,7 @@ describe('Trip', () => {
     expect(trip.suggestedActivities).to.eql([]);
   });
 
-  it('should have all the properties from the destination dataset (num travelers, date, duration, status, suggested activities, image and alt)', () => {
+  it('should have all the properties from the destination dataset', () => {
     expect(trip.destinationName).to.equal("Lima, Peru");
     expect(trip.lodgingPerDay).to.equal(70);
     expect(trip.flightCost).to.equal(400);

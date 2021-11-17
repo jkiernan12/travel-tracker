@@ -27,7 +27,8 @@ function checkLoginInputs(e) {
 
 function checkTravelerLogin() {
   const userIDNumber = Number(loginUsername.value.split("traveler")[1]);
-  if (loginPassword.value === "travel" && Number.isInteger(userIDNumber) && userIDNumber > 0 && userIDNumber <= 50) {
+  if (loginPassword.value === "travel" && Number
+    .isInteger(userIDNumber) && userIDNumber > 0 && userIDNumber <= 50) {
     getData(userIDNumber, initClasses);
     switchPages(loginPage, mainPage);
   } else {

@@ -1,5 +1,4 @@
 import User from "./User";
-import TripRepo from "./TripRepo";
 
 class Agent {
   constructor(allTrips, allUsers) {
@@ -25,9 +24,9 @@ class Agent {
       const tripDate = Date.parse(trip.date);
       return (tripDate > pastYearDate && tripDate < new Date())
     })
-    .reduce((total, trip) => {
-      return total += trip.getTotalCost();
-    }, 0);
+      .reduce((total, trip) => {
+        return total += trip.getTotalCost();
+      }, 0);
   }
   
   getCurrentTravelers() {
