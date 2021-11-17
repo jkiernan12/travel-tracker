@@ -1,24 +1,14 @@
 import chai from 'chai';
 const expect = chai.expect;
-import Trip from "../src/Trip.js";
 import TripRepo from "../src/TripRepo.js";
+import Trip from "../src/Trip.js";
 import Agent from '../src/Agent.js';
 import User from "../src/User.js";
 import { allTrips, allDestinations, allUsers } from "./dataset.js";
 
-describe('Trip', () => {
-  let trip, tripRepo, agent;
+describe('Agent', () => {
+  let tripRepo, agent;
   beforeEach(() => {
-    trip = new Trip({
-      "id": 5,
-      "userID": 2,
-      "destinationID": 4,
-      "travelers": 3,
-      "date": "2022/04/30",
-      "duration": 18,
-      "status": "pending",
-      "suggestedActivities": []
-    }, allDestinations);
     tripRepo = new TripRepo(allTrips, allDestinations);
     agent = new Agent(tripRepo, allUsers)
   });
@@ -32,24 +22,8 @@ describe('Trip', () => {
   });
 
   it('should be able to get all pending trips', () => {
-    expect(agent.getPending()).to.eql([
-      {
-        "alt": "boats at a dock during the day time",
-        "date": "2022/04/30",
-        "destinationName": "Cartagena, Colombia",
-        "destinationID": 4,
-        "duration": 18,
-        "flightCost": 350,
-        "img": "https://images.unsplash.com/photo-1558029697-a7ed1a4b94c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-       "lodgingPerDay": 65,
-        "numTravelers": 3,
-        "id": 5,
-        "status": "pending",
-        "suggestedActivities": [],
-        "travelers": 3,
-        "userID": 2,
-           }
-    ]);
+    expect(agent.getPending()[0]).to.be.an.instanceOf(Trip);
+    expect(agent.getPending()[0].userID).to.equal(2);
   });
 
   it('should should show all income generated in past year', () => {

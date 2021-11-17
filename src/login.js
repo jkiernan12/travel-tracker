@@ -13,9 +13,6 @@ const loginError = document.querySelector("#loginErrorMessage")
 loginButton.addEventListener("click", checkLoginInputs);
 logoutButton.addEventListener("click", logout);
 
-// getData(22, initClasses);
-// switchPages(loginPage, mainPage);
-
 function checkLoginInputs(e) {
   e.preventDefault();
   if (loginUsername.value === "agent") {
