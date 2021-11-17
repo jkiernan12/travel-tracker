@@ -13,10 +13,14 @@ function getData(userID, callback) {
     fetch('http://localhost:3001/api/v1/trips'),
     fetch('http://localhost:3001/api/v1/destinations')
   ]).then((res) => {
+    if (res.every(res => res.ok)) {
     return Promise.all(res.map(res => res.json()));
+    } else {
+      throw new Error("Error connecting to database.")
+    }
   })
     .then(data => callback(data))
-    .catch(err => console.log(err))
+    .catch(err => handleErr(err))
 }
 
 function postData(data) {
