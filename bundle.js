@@ -14,14 +14,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _css_base_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _render_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-/* harmony import */ var _api_calls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
-/* harmony import */ var _add_trip_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9);
-/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11);
-/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(12);
-/* harmony import */ var _TripRepo__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
-/* harmony import */ var _Destinations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14);
-/* harmony import */ var _Agent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15);
-/* harmony import */ var micromodal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8);
+/* harmony import */ var _add_trip_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(10);
+/* harmony import */ var _TripRepo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11);
+/* harmony import */ var _Destinations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(12);
+/* harmony import */ var _Agent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
+/* harmony import */ var micromodal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14);
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15);
 
 
 
@@ -31,26 +30,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-micromodal__WEBPACK_IMPORTED_MODULE_9__.default.init();
+micromodal__WEBPACK_IMPORTED_MODULE_7__.default.init();
 
 //Globals
 let user, tripRepo, destinations, agent;
 
+//Functions
 function initClasses(allData) {
   const userData = allData[0];
-  tripRepo = new _TripRepo__WEBPACK_IMPORTED_MODULE_6__.default(allData[1].trips, allData[2].destinations);
-  destinations = new _Destinations__WEBPACK_IMPORTED_MODULE_7__.default(allData[2].destinations);
-  user = new _User__WEBPACK_IMPORTED_MODULE_5__.default(userData, tripRepo.getUserTrips(userData.id));
+  tripRepo = new _TripRepo__WEBPACK_IMPORTED_MODULE_4__.default(allData[1].trips, allData[2].destinations);
+  destinations = new _Destinations__WEBPACK_IMPORTED_MODULE_5__.default(allData[2].destinations);
+  user = new _User__WEBPACK_IMPORTED_MODULE_3__.default(userData, tripRepo.getUserTrips(userData.id));
   (0,_render_dom__WEBPACK_IMPORTED_MODULE_1__.renderUserPage)(user);
-  (0,_add_trip_js__WEBPACK_IMPORTED_MODULE_3__.initializeForm)();
+  (0,_add_trip_js__WEBPACK_IMPORTED_MODULE_2__.initializeForm)();
 }
 
 function initAgentClasses(allData) {
-  tripRepo = new _TripRepo__WEBPACK_IMPORTED_MODULE_6__.default(allData[1].trips, allData[2].destinations);
-  destinations = new _Destinations__WEBPACK_IMPORTED_MODULE_7__.default(allData[2].destinations);
-  console.log(allData[0]);
-  agent = new _Agent__WEBPACK_IMPORTED_MODULE_8__.default(tripRepo, allData[0].travelers);
+  tripRepo = new _TripRepo__WEBPACK_IMPORTED_MODULE_4__.default(allData[1].trips, allData[2].destinations);
+  destinations = new _Destinations__WEBPACK_IMPORTED_MODULE_5__.default(allData[2].destinations);
+  agent = new _Agent__WEBPACK_IMPORTED_MODULE_6__.default(tripRepo, allData[0].travelers);
   (0,_render_dom__WEBPACK_IMPORTED_MODULE_1__.renderAgentPage)(agent);
 }
 
@@ -576,10 +574,10 @@ function renderWidget(trip) {
 }
 
 function renderSection(section, data) {
-section.innerHTML = "";
-data.forEach(trip => {
-  section.innerHTML += renderWidget(trip);
-})
+  section.innerHTML = "";
+  data.forEach(trip => {
+    section.innerHTML += renderWidget(trip);
+  })
 }
 
 
@@ -590,13 +588,136 @@ data.forEach(trip => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initializeForm": () => (/* binding */ initializeForm)
+/* harmony export */ });
+/* harmony import */ var _Trip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _scripts_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+/* harmony import */ var _api_calls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+
+
+
+
+//Query Selectors
+const requestTripBtn = document.querySelector("#requestTripBtn");
+const totalTripCost = document.querySelector('#totalTripCost');
+//Form Elements
+const newTripForm = document.querySelector("#newTripForm");
+const newTripFormInputs = document
+  .querySelectorAll("#newTripForm input, #newTripForm select")
+const tripDurationInput = document.querySelector("#trip-duration-input");
+const tripDateInput = document
+  .querySelector("#trip-date-input");
+const tripNumTravelersInput = document
+  .querySelector("#trip-numTravelers-input");
+const tripDestinationsInput = document
+  .querySelector("#trip-destinations-input");
+
+//Event listeners
+requestTripBtn.addEventListener("click", postNewTrip)
+newTripForm.addEventListener("change", checkPrice);
+
+//Functions
+function checkPrice() {
+  if (checkInputs()) {
+    let newTrip = instantiateNewTrip();
+    totalTripCost.innerText = newTrip.getTotalCost();
+  }
+}
+
+function postNewTrip(e) {
+  e.preventDefault();
+  (0,_api_calls_js__WEBPACK_IMPORTED_MODULE_2__.postData)(instantiateTripData());
+  newTripForm.reset();
+}
+
+function instantiateNewTrip() {
+  const currentDestID = Number(tripDestinationsInput.value);
+  const currentDest = _scripts_js__WEBPACK_IMPORTED_MODULE_1__.destinations.getByID(currentDestID);
+  return new _Trip__WEBPACK_IMPORTED_MODULE_0__.default(instantiateTripData(), currentDest);
+}
+
+function instantiateTripData() {
+  const currentDate = tripDateInput.value.replaceAll("-", "/");
+  return { 
+    id: _scripts_js__WEBPACK_IMPORTED_MODULE_1__.tripRepo.allTrips.length + 1,
+    userID: _scripts_js__WEBPACK_IMPORTED_MODULE_1__.user.id,
+    destinationID: Number(tripDestinationsInput.value),
+    travelers: Number(tripNumTravelersInput.value),
+    date: currentDate,
+    duration: Number(tripDurationInput.value),
+    status: "pending",
+    suggestedActivities: []
+  }
+}
+
+function checkInputs() {
+  return Array.from(newTripFormInputs).every(input => input.value);
+}
+
+function initializeForm() {
+  renderSelectList(_scripts_js__WEBPACK_IMPORTED_MODULE_1__.destinations.getAllNames());
+  setMinCalendarDate();
+}
+
+function setMinCalendarDate() {
+  tripDateInput.min = new Date().toISOString().split("T")[0]
+}
+
+function renderSelectList(names) {
+  tripDestinationsInput.innerHTML = `
+  <option class="default-select" value="">Choose a destination</option>`;
+  names.forEach(name => {
+    tripDestinationsInput.innerHTML += `
+    <option value="${name.id}">${name.name}</option>`
+  });
+}
+
+
+
+/***/ }),
+/* 8 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class Trip {
+  constructor(tripData, destinationData) {
+    this.userID = tripData.userID;
+    this.numTravelers = tripData.travelers;
+    this.date = tripData.date;
+    this.duration = tripData.duration;
+    this.status = tripData.status;
+    this.suggestedActivities = tripData.suggestedActivities;
+    this.destinationName = destinationData.destination;
+    this.lodgingPerDay = destinationData.estimatedLodgingCostPerDay;
+    this.flightCost = destinationData.estimatedFlightCostPerPerson;
+    this.img = destinationData.image;
+    this.alt = destinationData.alt;
+  }
+
+  getTotalCost() {
+    const totalFlights = this.numTravelers * this.flightCost;
+    const totalAccomodations = this.duration * this.lodgingPerDay;
+    return totalFlights + totalAccomodations;
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Trip);
+
+
+/***/ }),
+/* 9 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getData": () => (/* binding */ getData),
 /* harmony export */   "postData": () => (/* binding */ postData)
 /* harmony export */ });
 /* harmony import */ var _scripts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _render_dom_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-/* harmony import */ var micromodal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-
 
 
 
@@ -612,10 +733,14 @@ function getData(userID, callback) {
     fetch('http://localhost:3001/api/v1/trips'),
     fetch('http://localhost:3001/api/v1/destinations')
   ]).then((res) => {
-      return Promise.all(res.map(res => res.json()));
+    if (res.every(res => res.ok)) {
+    return Promise.all(res.map(res => res.json()));
+    } else {
+      throw new Error("Error connecting to database.")
+    }
   })
-  .then(data => callback(data))
-  .catch(err => console.log(err))
+    .then(data => callback(data))
+    .catch(err => handleErr(err))
 }
 
 function postData(data) {
@@ -626,14 +751,14 @@ function postData(data) {
     },
     body: JSON.stringify(data),
   })
-  .then(res => {
-    if (res.ok) {
-      getData(_scripts_js__WEBPACK_IMPORTED_MODULE_0__.user.id, _scripts_js__WEBPACK_IMPORTED_MODULE_0__.initClasses)
-      return res.json()
-    } else {
-      throw new Error("Please make sure all inputs are complete.")
-    }
-  }).catch(err => handleErr(err))
+    .then(res => {
+      if (res.ok) {
+        getData(_scripts_js__WEBPACK_IMPORTED_MODULE_0__.user.id, _scripts_js__WEBPACK_IMPORTED_MODULE_0__.initClasses)
+        return res.json()
+      } else {
+        throw new Error("Please make sure all inputs are complete.")
+      }
+    }).catch(err => handleErr(err))
 }
 
 function handleErr(err) {
@@ -650,7 +775,179 @@ function hideErr() {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class User {
+  constructor(userData, userTrips) {
+    this.id = userData.id;
+    this.name = userData.name;
+    this.allTrips = userTrips;
+  }
+
+  getTripsByDate(timeframe) {
+    const currentDate = new Date();
+    return this.allTrips.filter(trip => {
+      let tripEnd = this.getEndDate(trip.date, trip.duration);
+      let tripStart = new Date(trip.date);
+
+      if (timeframe === "past") {
+        return (tripEnd < currentDate);
+      } else if (timeframe === "future") {
+        return (tripStart > currentDate);
+      } else {
+        return (tripStart <= currentDate && tripEnd >= currentDate);
+      }
+    });
+  }
+
+  getEndDate(date, duration) {
+    const startDate = new Date(date);
+    return new Date(startDate.setDate(startDate.getDate() + duration));
+  }
+
+  lastYearCost() {
+    const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
+
+    return this.getTripsByDate("past")
+      .filter(trip => {
+        return (Date.parse(trip.date) > pastYearDate)
+      })
+      .reduce((total, trip) => {
+        return total += trip.getTotalCost();
+      }, 0)
+  }
+
+  getPending() {
+    return this.getTripsByDate("future")
+      .filter(trip => trip.status === "pending");
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (User);
+
+/***/ }),
+/* 11 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Trip_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+
+
+class TripRepo {
+  constructor(allTrips, allDestinations) {
+    this.allDestinations = allDestinations;
+    this.allTrips = this.createAllTrips(allTrips);
+  }
+
+  createAllTrips(allTripData) {
+    return allTripData.map(trip => {
+      const currentDestination = this.allDestinations
+        .find(destination => destination.id === trip.destinationID);
+      return new _Trip_js__WEBPACK_IMPORTED_MODULE_0__.default(trip, currentDestination);
+    });
+  }
+
+  getUserTrips(currentUserID) {
+    return this.allTrips.filter(trip => trip.userID === currentUserID);
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TripRepo);
+
+/***/ }),
+/* 12 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class Destinations {
+  constructor(allDestinations) {
+    this.allDestinations = allDestinations;
+  }
+
+  getAllNames() {
+    return this.allDestinations.sort((a, b) => {
+      if (b.destination < a.destination) {
+        return 1;
+      } else if (b.destination > a.destination) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+      .map(destination => { 
+        return { name: destination.destination, id: destination.id }
+      });
+  }
+
+  getByID(id) {
+    return this.allDestinations.find(destination => destination.id === id);
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Destinations);
+
+/***/ }),
+/* 13 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+
+
+class Agent {
+  constructor(allTrips, allUsers) {
+    this.allTrips = allTrips;
+    this.allUsers = this.createAllUsers(allUsers);
+  }
+
+  createAllUsers(data) {
+    return data.map((user) => {
+      return new _User__WEBPACK_IMPORTED_MODULE_0__.default(user, this.allTrips.getUserTrips(user.id))
+    })
+  }
+
+  getPending() {
+    return this.allTrips.allTrips.filter(trip => {
+      return trip.status === 'pending';
+    });
+  }
+
+  getYearIncome() {
+    const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
+    return this.allTrips.allTrips.filter(trip => {
+      const tripDate = Date.parse(trip.date);
+      return (tripDate > pastYearDate && tripDate < new Date())
+    })
+      .reduce((total, trip) => {
+        return total += trip.getTotalCost();
+      }, 0);
+  }
+  
+  getCurrentTravelers() {
+    return this.allUsers.filter(user => {
+      return user.getTripsByDate("current")[0];
+    })
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Agent);
+
+/***/ }),
+/* 14 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1101,133 +1398,14 @@ window.MicroModal = MicroModal;
 
 
 /***/ }),
-/* 9 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "initializeForm": () => (/* binding */ initializeForm)
-/* harmony export */ });
-/* harmony import */ var _Trip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _scripts_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-/* harmony import */ var _api_calls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
-
-
-
-
-//Query Selectors
-const requestTripBtn = document.querySelector("#requestTripBtn");
-const totalTripCost = document.querySelector('#totalTripCost');
-//Form Elements
-const newTripForm = document.querySelector("#newTripForm");
-const newTripFormInputs = document.querySelectorAll("#newTripForm input, #newTripForm select")
-const tripDurationInput = document.querySelector("#trip-duration-input");
-const tripDateInput = document.querySelector("#trip-date-input");
-const tripNumTravelersInput = document.querySelector("#trip-numTravelers-input");
-const tripDestinationsInput = document.querySelector("#trip-destinations-input");
-
-//Event listeners
-requestTripBtn.addEventListener("click", postNewTrip)
-newTripForm.addEventListener("change", checkPrice);
-
-//Functions
-function checkPrice() {
-  if (checkInputs()) {
-    let newTrip = instantiateNewTrip();
-    totalTripCost.innerText = newTrip.getTotalCost();
-  }
-}
-
-function postNewTrip(e) {
-  e.preventDefault();
-  (0,_api_calls_js__WEBPACK_IMPORTED_MODULE_2__.postData)(instantiateTripData());
-  newTripForm.reset();
-}
-
-function instantiateNewTrip() {
-  const currentDestID = Number(tripDestinationsInput.value);
-  const currentDest = _scripts_js__WEBPACK_IMPORTED_MODULE_1__.destinations.getByID(currentDestID);
-  return new _Trip__WEBPACK_IMPORTED_MODULE_0__.default(instantiateTripData(), currentDest);
-}
-
-function instantiateTripData() {
-  const currentDate = tripDateInput.value.replaceAll("-", "/");
-  return { 
-    id: _scripts_js__WEBPACK_IMPORTED_MODULE_1__.tripRepo.allTrips.length + 1,
-    userID: _scripts_js__WEBPACK_IMPORTED_MODULE_1__.user.id,
-    destinationID: Number(tripDestinationsInput.value),
-    travelers: Number(tripNumTravelersInput.value),
-    date: currentDate,
-    duration: Number(tripDurationInput.value),
-    status: "pending",
-    suggestedActivities: []
-  }
-}
-
-function checkInputs() {
-  return Array.from(newTripFormInputs).every(input => input.value);
-}
-
-function initializeForm() {
-  renderSelectList(_scripts_js__WEBPACK_IMPORTED_MODULE_1__.destinations.getAllNames());
-  setMinCalendarDate();
-}
-
-function setMinCalendarDate() {
-  tripDateInput.min = new Date().toISOString().split("T")[0]
-}
-
-function renderSelectList(names) {
-  tripDestinationsInput.innerHTML = `<option class="default-select" value="">Choose a destination</option>`;
-  names.forEach(name => {
-    tripDestinationsInput.innerHTML += `<option value="${name.id}">${name.name}</option>`
-  });
-}
-
-
-
-/***/ }),
-/* 10 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-class Trip {
-  constructor(tripData, destinationData) {
-    this.userID = tripData.userID;
-    this.numTravelers = tripData.travelers;
-    this.date = tripData.date;
-    this.duration = tripData.duration;
-    this.status = tripData.status;
-    this.suggestedActivities = tripData.suggestedActivities;
-    this.destinationName = destinationData.destination;
-    this.lodgingPerDay = destinationData.estimatedLodgingCostPerDay;
-    this.flightCost = destinationData.estimatedFlightCostPerPerson;
-    this.img = destinationData.image;
-    this.alt = destinationData.alt;
-  }
-
-  getTotalCost() {
-    const totalFlights = this.numTravelers * this.flightCost;
-    const totalAccomodations = this.duration * this.lodgingPerDay;
-    return totalFlights + totalAccomodations;
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Trip);
-
-
-/***/ }),
-/* 11 */
+/* 15 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "checkLoginInputs": () => (/* binding */ checkLoginInputs)
 /* harmony export */ });
-/* harmony import */ var _api_calls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _api_calls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony import */ var _scripts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 
 
@@ -1244,8 +1422,9 @@ const loginError = document.querySelector("#loginErrorMessage")
 loginButton.addEventListener("click", checkLoginInputs);
 logoutButton.addEventListener("click", logout);
 
-// getData(22, initClasses);
-// switchPages(loginPage, mainPage);
+// Automatic code for accessibility
+(0,_api_calls__WEBPACK_IMPORTED_MODULE_0__.getData)(22, _scripts__WEBPACK_IMPORTED_MODULE_1__.initClasses);
+switchPages(loginPage, mainPage);
 
 function checkLoginInputs(e) {
   e.preventDefault();
@@ -1285,178 +1464,6 @@ function switchPages(hide, show) {
 }
 
 
-
-/***/ }),
-/* 12 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-class User {
-  constructor(userData, userTrips) {
-    this.id = userData.id;
-    this.name = userData.name;
-    this.allTrips = userTrips;
-  }
-
-  getTripsByDate(timeframe) {
-    const currentDate = new Date();
-    return this.allTrips.filter(trip => {
-      let tripEnd = this.getEndDate(trip.date, trip.duration);
-      let tripStart = new Date(trip.date);
-
-      if (timeframe === "past") {
-        return (tripEnd < currentDate);
-      } else if (timeframe === "future") {
-        return (tripStart > currentDate);
-      } else {
-        return (tripStart <= currentDate && tripEnd >= currentDate);
-      }
-    });
-  }
-
-  getEndDate(date, duration) {
-    const startDate = new Date(date);
-    return new Date(startDate.setDate(startDate.getDate() + duration));
-  }
-
-  lastYearCost() {
-    const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
-
-    return this.getTripsByDate("past")
-    .filter(trip => {
-      return (Date.parse(trip.date) > pastYearDate)
-    })
-    .reduce((total, trip) => {
-      return total += trip.getTotalCost();
-    }, 0)
-  }
-
-  getPending() {
-    return this.getTripsByDate("future").filter(trip => trip.status === "pending")
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (User);
-
-/***/ }),
-/* 13 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Trip_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-
-
-class TripRepo {
-  constructor(allTrips, allDestinations) {
-    this.allDestinations = allDestinations;
-    this.allTrips = this.createAllTrips(allTrips);
-  }
-
-  createAllTrips(allTripData) {
-    return allTripData.map(trip => {
-      const currentDestination = this.allDestinations.find(destination => destination.id === trip.destinationID);
-      return new _Trip_js__WEBPACK_IMPORTED_MODULE_0__.default(trip, currentDestination);
-    });
-  }
-
-  getUserTrips(currentUserID) {
-    return this.allTrips.filter(trip => trip.userID === currentUserID);
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TripRepo);
-
-/***/ }),
-/* 14 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-class Destinations {
-  constructor(allDestinations) {
-    this.allDestinations = allDestinations;
-  }
-
-  getAllNames() {
-    return this.allDestinations.sort((a, b) => {
-       if (b.destination < a.destination) {
-         return 1;
-       } else if (b.destination > a.destination) {
-         return -1;
-       } else {
-         return 0;
-       }
-    })
-    .map(destination => { 
-      return { name: destination.destination, id: destination.id }
-    });
-  }
-
-  getByID(id) {
-    return this.allDestinations.find(destination => destination.id === id);
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Destinations);
-
-/***/ }),
-/* 15 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _TripRepo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-
-
-
-class Agent {
-  constructor(allTrips, allUsers) {
-    this.allTrips = allTrips;
-    this.allUsers = this.createAllUsers(allUsers);
-  }
-
-  createAllUsers(data) {
-    return data.map((user) => {
-      return new _User__WEBPACK_IMPORTED_MODULE_0__.default(user, this.allTrips.getUserTrips(user.id))
-    })
-  }
-
-  getPending() {
-    return this.allTrips.allTrips.filter(trip => {
-      return trip.status === 'pending';
-    });
-  }
-
-  getYearIncome() {
-    const pastYearDate = new Date().setFullYear(new Date().getFullYear() - 1);
-    return this.allTrips.allTrips.filter(trip => {
-      const tripDate = Date.parse(trip.date);
-      return (tripDate > pastYearDate && tripDate < new Date())
-    })
-    .reduce((total, trip) => {
-      return total += trip.getTotalCost();
-    }, 0);
-  }
-  
-  getCurrentTravelers() {
-    return this.allUsers.filter(user => {
-      return user.getTripsByDate("current")[0];
-    })
-  }
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Agent);
 
 /***/ })
 /******/ 	]);
